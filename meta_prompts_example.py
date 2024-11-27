@@ -33,11 +33,11 @@ class MetaPromptGenerator:
             任务描述：
             {task_description}
 
-            {f'目标受众：\n{target_audience}\n' if target_audience else ''}
+            {f'目标受众：{target_audience}' if target_audience else ''}
 
-            {f'约束条件：\n' + '\n'.join(f'- {c}' for c in constraints) if constraints else ''}
+            {f'约束条件：' + ''.join(f'- {c}' for c in constraints) if constraints else ''}
 
-            {f'示例输入输出：\n' + '\n'.join(f'输入: {i}\n输出: {o}\n' for i, o in zip(example_inputs, example_outputs)) if example_inputs and example_outputs else ''}
+            {f'示例输入输出：' + ''.join(f'输入: {i}输出: {o}' for i, o in zip(example_inputs, example_outputs)) if example_inputs and example_outputs else ''}
 
             请生成一个结构化的提示，包含：
             1. 主要指令
@@ -185,12 +185,12 @@ async def demonstrate_meta_prompts():
     
     try:
         # 示例1：代码审查提示
-        print("\n=== 示例1：代码审查提示生成 ===")
+        print("=== 示例1：代码审查提示生成 ===")
         code_review_task = {
             "task_description": "创建一个代码审查助手，帮助开发者审查Python代码",
             "example_inputs": [
-                "def calculate_sum(a, b):\n    return a + b",
-                "class User:\n    def __init__(self):\n        pass"
+                "def calculate_sum(a, b):    return a + b",
+                "class User:    def __init__(self):        pass"
             ],
             "example_outputs": [
                 "代码风格良好，但建议添加类型提示和文档字符串。",
@@ -205,7 +205,7 @@ async def demonstrate_meta_prompts():
         
         result = await generator.generate_meta_prompt(**code_review_task)
         if result["success"]:
-            print("\n生成的代码审查提示:")
+            print("生成的代码审查提示:")
             print(result["prompt"])
             
             # 测试生成的提示
@@ -224,13 +224,13 @@ async def demonstrate_meta_prompts():
             )
             
             if test_result["success"]:
-                print("\n测试结果:")
+                print("测试结果:")
                 for r in test_result["results"]:
-                    print(f"\n输入:\n{r['input']}")
-                    print(f"\n输出:\n{r['output']}")
+                    print(f"输入:{r['input']}")
+                    print(f"输出:{r['output']}")
         
         # 示例2：文章摘要提示
-        print("\n=== 示例2：文章摘要提示生成 ===")
+        print("=== 示例2：文章摘要提示生成 ===")
         summarization_task = {
             "task_description": "创建一个文章摘要生成器，能够提取文章的关键信息",
             "target_audience": "内容编辑和研究人员",
@@ -243,7 +243,7 @@ async def demonstrate_meta_prompts():
         
         result = await generator.generate_meta_prompt(**summarization_task)
         if result["success"]:
-            print("\n生成的摘要提示:")
+            print("生成的摘要提示:")
             print(result["prompt"])
             
             # 优化提示
@@ -259,7 +259,7 @@ async def demonstrate_meta_prompts():
             )
             
             if refined_result["success"]:
-                print("\n优化后的提示:")
+                print("优化后的提示:")
                 print(refined_result["refined_prompt"])
 
     except Exception as e:

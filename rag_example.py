@@ -1,11 +1,17 @@
 from openai import OpenAI
 from typing import List, Dict, Any
 import numpy as np
+print("正在导入必要模块...")
 from sklearn.metrics.pairwise import cosine_similarity
+print("模块导入完成！")
 import os
 import json
 
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+    timeout=30.0  # 默认超时时间
+)
 
 class RAGSystem:
     def __init__(self, documents: List[Dict[str, str]] = None):

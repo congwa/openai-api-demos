@@ -1,8 +1,13 @@
 from openai import OpenAI
 from typing import List, Dict, Any
 import json
+import os
 
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+    timeout=30.0  # 默认超时时间
+)
 
 def demonstrate_cot_reasoning(problem: str = None) -> Dict[str, Any]:
     """
@@ -16,13 +21,12 @@ def demonstrate_cot_reasoning(problem: str = None) -> Dict[str, Any]:
         response = client.chat.completions.create(
             model="gpt-4",  # 使用GPT-4以获得更好的推理能力
             messages=[
-                {"role": "system", "content": """你是一个专业的数学解题助手。
-解题时请遵循以下步骤：
-1. 分析问题中的已知条件
-2. 列出解题步骤
-3. 逐步计算
-4. 得出最终结果
-请在每个步骤前标明步骤编号。"""},
+                {"role": "system", "content": """解题时请遵循以下步骤：
+                    1. 分析问题中的已知条件
+                    2. 列出解题步骤
+                    3. 逐步计算
+                    4. 得出最终结果
+                    请在每个步骤前标明步骤编号。"""},
                 {"role": "user", "content": problem}
             ],
             temperature=0.2,  # 降低随机性，保持逻辑性
@@ -32,6 +36,11 @@ def demonstrate_cot_reasoning(problem: str = None) -> Dict[str, Any]:
         return {
             "success": True,
             "reasoning": response.choices[0].message.content
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
         }
 
 def solve_complex_task(task: str = None) -> Dict[str, Any]:
@@ -47,14 +56,14 @@ def solve_complex_task(task: str = None) -> Dict[str, Any]:
             model="gpt-4",
             messages=[
                 {"role": "system", "content": """你是一个专业的系统设计专家。
-分析问题时请遵循以下框架：
-1. 需求分析：列出核心功能需求
-2. 系统架构：描述主要组件
-3. 数据模型：设计核心数据结构
-4. 接口设计：定义关键API
-5. 技术选型：推荐适合的技术栈
-6. 扩展性考虑：分析可能的扩展点
-请在每个部分前标明编号，并详细展开说明。"""},
+                    分析问题时请遵循以下框架：
+                    1. 需求分析：列出核心功能需求
+                    2. 系统架构：描述主要组件
+                    3. 数据模型：设计核心数据结构
+                    4. 接口设计：定义关键API
+                    5. 技术选型：推荐适合的技术栈
+                    6. 扩展性考虑：分析可能的扩展点
+                    请在每个部分前标明编号，并详细展开说明。"""},
                 {"role": "user", "content": task}
             ],
             temperature=0.3,
@@ -64,6 +73,11 @@ def solve_complex_task(task: str = None) -> Dict[str, Any]:
         return {
             "success": True,
             "design": response.choices[0].message.content
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
         }
 
 def demonstrate_step_by_step_coding(problem: str = None) -> Dict[str, Any]:
@@ -96,3 +110,8 @@ def demonstrate_step_by_step_coding(problem: str = None) -> Dict[str, Any]:
             "success": True,
             "solution": response.choices[0].message.content
         } 
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }

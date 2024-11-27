@@ -1,7 +1,12 @@
 from openai import OpenAI
 import numpy as np
+import os
 
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+    timeout=30.0  # 默认超时时间
+)
 
 def demonstrate_embeddings():
     """
@@ -51,6 +56,39 @@ def demonstrate_embeddings():
         "batch_embedding_length": len(batch_response.data[0].embedding),
         "text_similarity": similarity
     }
+
+def search_documents(query, documents):
+    """
+    搜索文档函数
+    Args:
+        query: 查询文本
+        documents: 要搜索的文档列表
+    Returns:
+        最相关的文档及其相似度分数
+    """
+    # 获取查询文本的嵌入
+    query_embedding_response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=query
+    )
+    query_embedding = query_embedding_response.data[0].embedding
+
+    # 获取所有文档的嵌入
+    doc_embedding_response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=documents
+    )
+    
+    # 计算相似度并返回最相关的文档
+    similarities = []
+    for i, doc_embedding in enumerate(doc_embedding_response.data):
+        similarity = np.dot(query_embedding, doc_embedding.embedding) / (
+            np.linalg.norm(query_embedding) * np.linalg.norm(doc_embedding.embedding)
+        )
+        similarities.append((documents[i], similarity))
+    
+    # 按相似度排序
+    return sorted(similarities, key=lambda x: x[1], reverse=True)
 
 # 使用示例
 if __name__ == "__main__":

@@ -1,5 +1,10 @@
 from openai import OpenAI
-client = OpenAI()
+import os
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+    timeout=30.0  # 默认超时时间
+)
 
 # 基础聊天示例
 def basic_chat():

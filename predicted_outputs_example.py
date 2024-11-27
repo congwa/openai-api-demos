@@ -1,10 +1,15 @@
 from openai import OpenAI
-from typing import Dict, List, Any, Union
+from typing import Dict, List, Any, Union, Generator
 import json
 from enum import Enum
 import numpy as np
+import os
 
-client = OpenAI()
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+    timeout=30.0  # 默认超时时间
+)
 
 class OutputFormat(Enum):
     JSON = "json_object"
