@@ -30,6 +30,7 @@ from predicted_outputs_example import (
 from rag_example import RAGSystem
 from tools.file_search_example import FileSearchAssistant
 from meta_prompts_example import demonstrate_meta_prompts
+from tools.code_interpreter_demo import demo_code_interpreter
 import argparse
 import json
 import os
@@ -368,7 +369,7 @@ class User {
                 print(f"生成回答时出错: {result['error']}")
 
         print("\n=== 16. 文件搜索助手演示 ===")
-        assistant = FileSearchAssistant(client)
+        assistant = FileSearchAssistant()
         
         # 设置助手
         print("正在设置文件搜索助手...")
@@ -394,7 +395,7 @@ class User {
         # 测试搜索查询
         test_queries = [
             "Python中如何处理异常？请给出示例代码",
-            "机器���习的主要类���有哪些？每种类型的特点是什么？",
+            "机器习的主要类有哪些？每种类型的特点是什么？",
             "API认证有哪些主要方法？请详细说明每种方法的特点"
         ]
         
@@ -415,6 +416,13 @@ class User {
 
         print("\n=== 17. 元提示生成演示 ===")
         await demonstrate_meta_prompts()
+
+        print("\n=== 18. 代码解释器演示 ===")
+        interpreter_result = demo_code_interpreter()
+        if interpreter_result:
+            print(f"代码解释器助手ID: {interpreter_result['assistant_id']}")
+            print(f"对话线程ID: {interpreter_result['thread_id']}")
+            print("代码解释器演示完成！")
 
     except Exception as e:
         print(f"发生错误: {str(e)}")

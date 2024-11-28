@@ -13,7 +13,11 @@ class FileSearchAssistant:
         参数:
         - client: OpenAI客户端实例
         """
-        self.client = client or OpenAI()
+        self.client = client or OpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
+            organization=os.getenv("OPENAI_ORG_ID"),  # 可选 OpenAI API 中的组织 ID
+            timeout=30.0  # 默认超时时间
+        )
         self.assistant = None
         self.thread = None
         self.uploaded_files = []

@@ -29,6 +29,23 @@
 - 📚 RAG 知识库系统
 - 🔎 智能文件搜索
 - ✨ 元提示生成
+- 💻 代码解释器(Code Interpreter 功能)
+
+### Code Interpreter 功能
+Code Interpreter 是 OpenAI 提供的一个强大工具，能够：
+- 执行实时 Python 代码
+- 进行数据分析和可视化
+- 处理数学计算和绘图
+- 提供交互式编程环境
+
+主要特性：
+- ✅ 安全的代码执行环境
+- ✅ 支持常用数据科学库
+- ✅ 实时结果展示
+- ✅ 状态保持
+- ✅ 错误处理机制
+
+详细文档请参考 [Code Interpreter 文档](doc/CodeInterpreter.md)
 
 ## 🚀 快速开始
 
@@ -105,6 +122,12 @@ python main.py --api-key YOUR_API_KEY
     - 提示优化
     - 效果评估
 
+12. **Code Interpreter** (code_interpreter.py)
+    - 实时 Python 代码执行
+    - 数据分析和可视化
+    - 数学计算和绘图
+    - 交互式编程环境
+
 ## 📝 使用说明
 
 ### 准备工作
@@ -123,7 +146,9 @@ openai-api-demos/
 ├── chat_example.py      # 聊天示例
 ├── function_calling.py  # 函数调用
 ├── image_generation.py  # 图像生成
-└── tools/              # 工具模块
+├── speech_to_text.py    # 语音转文字
+├── text_to_speech.py    # 文字转语音
+├── tools/              # 工具模块
     └── file_search_example.py
 ```
 
@@ -141,5 +166,5 @@ OpenAI, GPT-4, ChatGPT, API, RAG, 机器学习, 人工智能, 自然语言处理
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/openai-api-demos&type=Date)](https://star-history.com/#yourusername/openai-api-demos&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=congwa/openai-api-demos&type=Date)](https://star-history.com/#congwa/openai-api-demos&Date)
 # openai-api-demos
