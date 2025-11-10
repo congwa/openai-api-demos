@@ -1,5 +1,9 @@
 # OpenAI API 全功能演示
 
+## 归档说明
+
+ai速度更新非常快，这些已经是常规知识了，非必要不会进行维护了
+
 🚀 一个全面的 OpenAI API 功能演示项目，包含 17 个核心功能的实现示例。
 
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue)]()
